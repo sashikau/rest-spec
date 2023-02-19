@@ -1,0 +1,72 @@
+openapi: 3.0.0
+x-stoplight:
+  id: nymo8sqij7n6t
+info:
+  title: book-spec
+  version: '1.0'
+servers:
+  - url: 'http://localhost:3000'
+paths:
+  /book:
+    post:
+      summary: Create New Book
+      operationId: post-book
+      responses:
+        '200':
+          description: Book Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+        '400':
+          description: Missing Required Information
+        '409':
+          description: ISBN Already Exists
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Book'
+            examples:
+              Create book:
+                value:
+                  name: Treasure Island
+                  isbn: '9780195811391'
+                  price: 119.5
+                  authors:
+                    - Robert Louis Stevenson
+        description: Post the necessary fields for the API to create a new book.
+      description: Create a new book.
+    parameters: []
+components:
+  schemas:
+    Book:
+      type: object
+      x-examples:
+        Example 1:
+          id: '1'
+          name: Treasure Island
+          isbn: '9780195811391'
+          price: 119.5
+          authors:
+            - Robert Louis Stevenson
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        isbn:
+          type: string
+        price:
+          type: number
+        authors:
+          type: array
+          items:
+            type: string
+      required:
+        - name
+        - isbn
+        - price
+        - authors
+      title: Book
+
